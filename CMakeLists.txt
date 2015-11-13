@@ -13,16 +13,17 @@ find_package(catkin REQUIRED COMPONENTS
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-## Find gazebo
-find_package(gazebo REQUIRED)
-include_directories(${GAZEBO_INCLUDE_DIRS})
-link_directories(${GAZEBO_LIBRARY_DIRS})
+# Find gazebo 
+include (FindPkgConfig) 
+if (PKG_CONFIG_FOUND) 
+  pkg_check_modules(GAZEBO gazebo) 
+endif() 
+
+include_directories(${GAZEBO_INCLUDE_DIRS}) 
 
 ## Find Boost
 find_package(Boost REQUIRED COMPONENTS thread)
 include_directories(${Boost_INCLUDE_DIRS})
-
-set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 
 
@@ -41,7 +42,7 @@ include_directories(
 #rosbuild_link_boost(all_wheel_steering_plugin thread)
 
 add_library(all_wheel_steering_plugin src/all_wheel_steering_plugin.cpp)
-target_link_libraries(all_wheel_steering_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(all_wheel_steering_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARY_DIRS} ${catkin_LIBRARIES})
 
 
 
