@@ -42,6 +42,7 @@ include_directories(
 #rosbuild_link_boost(all_wheel_steering_plugin thread)
 
 add_library(all_wheel_steering_plugin src/all_wheel_steering_plugin.cpp)
+add_dependencies(all_wheel_steering_plugin monstertruck_msgs_generate_messages_cpp)
 target_link_libraries(all_wheel_steering_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARY_DIRS} ${catkin_LIBRARIES})
 
 
